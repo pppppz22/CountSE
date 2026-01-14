@@ -1,0 +1,5 @@
+训练使用
+python -u main.py --output_dir /data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-test -c config/cfg_fsc147_val.py --datasets config/datasets_fsc147_val.json --pretrain_model_path /data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/groundingdino_swinb_cogcoor.pth --start_epoch 5 --gpuid 7 --options text_encoder_type=/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/bert-base-uncased
+
+推理使用
+CUDA_VISIBLE_DEVICES=1 python -u main_inference.py --eval --output_dir /data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-num18 -c config/cfg_fsc147_test.py --datasets config/datasets_fsc147_test.json --pretrain_model_path /data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-num18/checkpoint_best_regular.pth --gpuid 2 --options text_encoder_type=/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/bert-base-uncased --crop --remove_bad_exemplar

@@ -1,0 +1,83 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Gdino FSC147",
+            "type": "python",
+            "request": "launch",
+            "python": "/data1/peng.zhang/miniconda3/envs/countgd/bin/python",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir", "/data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-debug",
+                "-c", "config/cfg_fsc147_val.py",
+                "--datasets", "config/datasets_fsc147_val.json",
+                "--pretrain_model_path", "/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/groundingdino_swinb_cogcoor.pth",
+                "--gpuid", "5",
+                "--options", "text_encoder_type=/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/bert-base-uncased",
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "Debug Gdino ZSC 10k Val KL5+1+1",
+            "type": "python",
+            "request": "launch",
+            "python": "/data1/peng.zhang/miniconda3/envs/countgd/bin/python",
+            "program": "/data1/peng.zhang/codes/Gdino-text+adapt-cluster/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir", "/data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-zsc-kl5+1+1-debug",
+                "-c", "config/cfg_zsc_10k_val_kl5+1+0.py",
+                "--datasets", "config/datasets_zsc_10k_val.json",
+                "--pretrain_model_path", "/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/groundingdino_swinb_cogcoor.pth",
+                "--gpuid", "5",
+                "--options", "text_encoder_type=/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/bert-base-uncased"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "Python 调试程序: 包含参数的当前文件",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main_inference.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--output_dir"," ./countgd_val",
+                "-c", "config/cfg_carpk_test.py", 
+                "--datasets", "config/datasets_carpk_test.json", 
+                "--eval",
+                "--query_mode", "memory",
+                "--pretrain_model_path", "countgd_val/checkpoint-100-10-0001-initTrue_tgtweight.pth",
+                "--options", "text_encoder_type=checkpoints/bert-base-uncased",
+                "--crop",
+                "--remove_bad_exemplar"
+            ]
+        },
+        {
+            "name": "Debug G-DINO Inference",
+            "type": "python",
+            "request": "launch",
+            "program": "main_inference.py",
+            "python": "/data1/peng.zhang/miniconda3/envs/countgd/bin/python",
+            "args": [
+                "--eval",
+                "--output_dir", "/data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-num18",
+                "-c", "config/cfg_fsc147_test.py",
+                "--datasets", "config/datasets_fsc147_test.json",
+                "--pretrain_model_path", "/data1/peng.zhang/checkpoints/memory-gdino/Gdino-text+adapt_cluster-num18/checkpoint_best_regular.pth",
+                "--gpuid", "4",
+                "--options", "text_encoder_type=/data1/peng.zhang/checkpoints/memory-gdino/provided_checkpoints/bert-base-uncased",
+                "--crop",
+                "--remove_bad_exemplar"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONUNBUFFERED": "1"
+            }
+        }
+    ]
+}
