@@ -24,7 +24,7 @@ git clone git@github.com:pppppz22/CountSE.git
 
 ### 2. Dataset Preparation
 
-We use fsc147 to train and test our model. Click the [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything) to download it. Then modify the relevant paths of config/datasets_fsc147_mal.json and datasets_fsc147_test. json in the root directory.
+We use fsc147 to train and test our model. Click the [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything) to download it. Then modify the relevant paths of config/datasets_fsc147_val.json and datasets_fsc147_test. json in the root directory.
 
 ### 3. Set Up Environment
 If you have already run CountGD, you can directly use its environment to run our code.
