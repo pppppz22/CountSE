@@ -463,12 +463,17 @@ class CocoDetection(torchvision.datasets.CocoDetection):
         return_masks,
         aux_target_hacks=None,
         remove_bad_exemplar=False,
+        annotation_mode="fsc147",
     ):
         super(CocoDetection, self).__init__(img_folder, ann_file)
         self._transforms = transforms
         self.prepare = ConvertCocoPolysToMask(return_masks)
         self.aux_target_hacks = aux_target_hacks
         self.remove_bad_exemplar = remove_bad_exemplar
+        if annotation_mode not in ("fsc147", "no_exemplar"):
+            raise ValueError("annotation_mode must be 'fsc147' or 'no_exemplar'")
+        self.annotation_mode = annotation_mode
+        self.exemplar_count = 3 if annotation_mode == "fsc147" else 0
 
     def change_hack_attr(self, hackclassname, attrkv_dict):
         target_class = dataset_hook_register[hackclassname]
@@ -516,13 +521,17 @@ class CocoDetection(torchvision.datasets.CocoDetection):
         # assert exemp_count == 3
 
         img, target = self.prepare(img, target)
-        target["exemplars"] = target["boxes"][-3:]
+        count = self.exemplar_count
+        if len(target["boxes"]) < count:
+            raise ValueError("Fewer annotations than appended exemplar boxes")
+        target["exemplars"] = target["boxes"][-count:] if count else target["boxes"][:0]
         # Remove inaccurate exemplars.
-        if image_id == 6003 and self.remove_bad_exemplar:
+        if count and image_id == 6003 and self.remove_bad_exemplar:
             target["exemplars"] = torch.tensor([])
         # target["labels_uncropped"] = torch.clone(target["labels"])
-        target["boxes"] = target["boxes"][:-3]
-        target["labels"] = target["labels"][:-3]
+        if count:
+            target["boxes"] = target["boxes"][:-count]
+            target["labels"] = target["labels"][:-count]
         target["labels_uncropped"] = torch.clone(target["labels"])
         if self._transforms is not None:
             img, target = self._transforms(img, target)
@@ -826,6 +835,7 @@ def build(image_set, args, datasetinfo):
         return_masks=args.masks,
         aux_target_hacks=None,
         remove_bad_exemplar=args.remove_bad_exemplar,
+        annotation_mode=getattr(args, "annotation_mode", "fsc147"),
     )
     return dataset
 
