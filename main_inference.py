@@ -15,7 +15,6 @@ warnings.simplefilter("ignore")
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, DistributedSampler
-from transformers.models.swiftformer.convert_swiftformer_original_to_hf import device
 
 from util.get_param_dicts import get_param_dict
 from util.logger import setup_logger
@@ -46,6 +45,10 @@ def get_args_parser():
     # dataset parameters
     parser.add_argument(
         "--datasets", type=str, required=True, help="path to datasets json"
+    )
+    parser.add_argument(
+        "--annotation_mode", choices=["fsc147", "no_exemplar"], default="fsc147",
+        help="fsc147: exclude 3 appended exemplar annotations; no_exemplar: keep all GT",
     )
     parser.add_argument("--no_text", action="store_true")
     parser.add_argument(
@@ -362,7 +365,12 @@ def main(args):
             args.start_epoch = checkpoint["epoch"] + 1
 
     if (not args.resume) and args.pretrain_model_path:
-        checkpoint = torch.load(args.pretrain_model_path, map_location="cpu")["model"]
+        # Released checkpoints include argparse.Namespace metadata.
+        if hasattr(torch.serialization, "safe_globals"):
+            with torch.serialization.safe_globals([argparse.Namespace]):
+                checkpoint = torch.load(args.pretrain_model_path, map_location="cpu", weights_only=True)["model"]
+        else:
+            checkpoint = torch.load(args.pretrain_model_path, map_location="cpu")["model"]
         from collections import OrderedDict
 
         _ignorekeywordlist = args.finetune_ignore if args.finetune_ignore else []
