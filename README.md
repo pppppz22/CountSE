@@ -1,14 +1,8 @@
 # CountSE: Soft Exemplar Open-set Object Counting
 
-**ShanghaiTech Part A — RMSE:** [![Papers with Code — ShanghaiTech Part A — RMSE](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge.svg?eval=10581&live=1)](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge-link?eval=10581)
-
-**ShanghaiTech Part A — MAE:** [![Papers with Code — ShanghaiTech Part A — MAE](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge.svg?eval=10580&live=1)](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge-link?eval=10580)
-
-**FSC-147 — MAE:** [![Papers with Code — FSC-147 — MAE](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge.svg?eval=10578&live=1)](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge-link?eval=10578)
-
 Shuai Liu, Peng Zhang, Shiwei Zhang, Wei Ke*
 
-Official PyTorch implementation for CountSE. Please check the [[Paper]](https://openaccess.thecvf.com/content/ICCV2025/papers/Liu_CountSE_Soft_Exemplar_Open-set_Object_Counting_ICCV_2025_paper.pdf) for details.
+Official PyTorch implementation for [CountSE](https://openaccess.thecvf.com/content/ICCV2025/papers/Liu_CountSE_Soft_Exemplar_Open-set_Object_Counting_ICCV_2025_paper.pdf).
 
 ## CountSE Architecture
 
@@ -16,7 +10,7 @@ Official PyTorch implementation for CountSE. Please check the [[Paper]](https://
 
 ## Contents
 * [📦 Preparation](#preparation)
-* [🎯 Inference](#inference)
+* [🎯 Evaluation](#evaluation)
 * [🚀 Training](#training)
 * [📜 Citation](#citation)
 * [🙏 Acknowledgements](#acknowledgements)
@@ -75,11 +69,17 @@ python -u main.py --output_dir ./countse_ckpt -c config/cfg_fsc147_val.py --data
 
 ```
 
-## Inference
+## Evaluation
 
 Download the trained [CountSE checkpoint](https://drive.google.com/file/d/1wJaWcrQB_z4LaQwApNChg_xN3DWvqfgP/view) and save it as `pretrained_ckpts/checkpoint_best_regular.pth`.
 
 See the [evaluation guide](cross_dataset/README.md) for FSC-147 validation/test and CARPK/ShanghaiTech-A cross-dataset evaluation, including data preparation, inference settings, and commands.
+
+**ShanghaiTech Part A — RMSE:** [![Papers with Code — ShanghaiTech Part A — RMSE](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge.svg?eval=10581&live=1)](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge-link?eval=10581)
+
+**ShanghaiTech Part A — MAE:** [![Papers with Code — ShanghaiTech Part A — MAE](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge.svg?eval=10580&live=1)](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge-link?eval=10580)
+
+**FSC-147 — MAE:** [![Papers with Code — FSC-147 — MAE](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge.svg?eval=10578&live=1)](https://paperswithcode.co/api/v1/papers/98356/leaderboard-badge-link?eval=10578)
 
 ## Citation
 
